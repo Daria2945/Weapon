@@ -19,8 +19,11 @@ class Weapon
 
     public void Fire(Player player)
     {
+        if(player == null)
+            throw new ArgumentNullException(nameof(player));
+
         if (_bullets == 0)
-            return;
+            throw new ArgumentOutOfRangeException(nameof(_bullets));
 
         _bullets--;
         player.TakeDamage(_damage);
@@ -42,7 +45,7 @@ class Player
     public void TakeDamage(int damage)
     {
         if (damage < 0)
-            return;
+            throw new ArgumentOutOfRangeException(nameof(damage));
 
         _health -= damage;
 
@@ -57,11 +60,17 @@ class Bot
 
     public Bot(Weapon weapon)
     {
+        if(weapon == null)
+            throw new ArgumentNullException(nameof(weapon));
+
         _weapon = weapon;
     }
 
     public void OnSeePlayer(Player player)
     {
+        if(player == null)
+            throw new ArgumentNullException(nameof(player));
+
         _weapon.Fire(player);
     }
 }
